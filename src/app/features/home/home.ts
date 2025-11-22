@@ -1,38 +1,27 @@
 import { Component } from '@angular/core';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-home',
-  standalone: true,
+  imports: [RouterLink],
   template: `
-    <section class="home-page">
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the home page of our application.</p>
-      <button (click)="navigateToDetails()">Go to Details</button>
-    </section>
+    <h1>Atlas Project</h1>
+    <div class="actions">
+      <a role="link" routerLink="kanban">Open Kanban Board</a>
+      <a role="link" routerLink="edit-page">+ Create new page</a>
+    </div>
   `,
-  styles: [`
-    .home-page {
-      text-align: center;
-      margin-top: 50px;
+  host: {
+    role: 'section'
+  },
+  styles: `
+      .actions {
+          display: grid;
+          gap: var(--size-2);
+          color: var(--blue-6);
     }
-    h1 {
-      font-size: 2.5rem;
-      color: #333;
-    }
-    p {
-      font-size: 1.2rem;
-      color: #666;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-  `]
+  `
 })
-export class HomePageComponent {
-  navigateToDetails() {
-    console.log('Navigating to details...');
-  }
+export default class Home {
+
 }
