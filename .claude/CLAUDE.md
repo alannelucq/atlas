@@ -397,3 +397,4 @@ export class ArticleCardComponent {
   // ... rest of component
 }
 ```
+- In template, always handle spacing between elements within container (ex: gap) instead on items (ex: margin-bottom).

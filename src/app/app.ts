@@ -12,8 +12,6 @@ import { RouterOutlet } from "@angular/router";
   styles: `
       main {
           margin: auto;
-          place-content: center;
-          border: 2px solid red;
           max-width: 1000px;
       }
   `

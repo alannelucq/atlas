@@ -1,0 +1,101 @@
+/* Button Styles */
+
+button, a.button-link {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  gap: var(--size-2);
+  padding: var(--size-2) var(--size-4);
+  border-radius: var(--radius-2);
+  font-weight: var(--font-weight-6);
+  text-decoration: none;
+  transition: all var(--ease-3) var(--speed-2);
+  border: var(--border-size-1) solid transparent;
+  font-family: var(--font-system), sans-serif;
+  font-size: var(--font-size-1);
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: var(--border-size-2) solid var(--blue-7);
+    outline-offset: var(--size-1);
+  }
+
+  &.button-primary {
+    background: linear-gradient(90deg, var(--violet-7) 0%, var(--blue-7) 100%);
+    color: var(--gray-0);
+
+    &:hover {
+      background: linear-gradient(90deg,
+        color-mix(in srgb, var(--violet-7) 90%, black) 0%,
+        color-mix(in srgb, var(--blue-7) 90%, black) 100%
+      );
+    }
+
+    &:active {
+      background: linear-gradient(90deg,
+        color-mix(in srgb, var(--violet-7) 80%, black) 0%,
+        color-mix(in srgb, var(--blue-7) 80%, black) 100%
+      );
+    }
+  }
+
+  &.button-secondary {
+    background: var(--gray-0);
+    color: var(--violet-7);
+    border-color: var(--violet-4);
+    border-width: var(--border-size-2);
+
+    &:hover {
+      background: var(--violet-0);
+      border-color: var(--violet-5);
+    }
+
+    &:active {
+      background: var(--violet-1);
+      border-color: var(--violet-6);
+    }
+  }
+}
+
+button {
+  background: var(--gray-0);
+  color: var(--gray-9);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.button-primary:hover:disabled {
+    background: linear-gradient(90deg, var(--violet-7) 0%, var(--blue-7) 100%);
+  }
+
+  &.button-secondary:hover:disabled {
+    background: var(--gray-0);
+    border-color: var(--violet-2);
+  }
+}
+
+/* Link Styles */
+
+a {
+  color: var(--blue-6);
+  text-decoration: none;
+  transition: color var(--ease-3) var(--speed-2);
+
+  &:hover {
+    color: var(--blue-7);
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: var(--border-size-2) solid var(--blue-7);
+    outline-offset: var(--size-1);
+    border-radius: var(--radius-1);
+  }
+
+  &.button-link:hover {
+    text-decoration: none;
+  }
+}
