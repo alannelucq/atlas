@@ -5,7 +5,7 @@ import { expect, test } from "vitest";
 import Home from './home';
 import { provideRouter } from "@angular/router";
 
-class HomeTester {
+class PageTester {
   readonly fixture = TestBed.createComponent(Home);
   readonly root = page.elementLocator(this.fixture.nativeElement);
   readonly title = page.getByRole('heading', {name: /Atlas Project/});
@@ -16,7 +16,7 @@ class HomeTester {
 describe('Home', () => {
   test('should have default elements', async () => {
     TestBed.configureTestingModule({providers: [provideRouter([])]});
-    const tester = new HomeTester();
+    const tester = new PageTester();
     expect(tester.title).toBeVisible();
     expect(tester.kanbanLink).toHaveAttribute('routerLink', 'kanban');
     expect(tester.createPageLink).toHaveAttribute('routerLink', 'edit-page');

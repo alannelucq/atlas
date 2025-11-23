@@ -4,7 +4,7 @@ import { page } from "vitest/browser";
 
 import EditPage from "./edit-page";
 
-class EditPageTester {
+class PageTester {
   readonly fixture = TestBed.createComponent(EditPage);
   readonly root = page.elementLocator(this.fixture.nativeElement);
   readonly description = page.getByRole('textbox', {name: /Description/});
@@ -12,7 +12,7 @@ class EditPageTester {
 
 describe('Edit page', () => {
   it('should display description', async () => {
-    const tester = new EditPageTester();
+    const tester = new PageTester();
     await tester.description.fill('This is awesome');
     expect(tester.root).toHaveTextContent(`Description: This is awesome`);
   })
