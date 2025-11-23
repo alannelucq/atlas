@@ -7,6 +7,7 @@
 @import "./typography.css";
 @import "./buttons.css";
 @import "./badges.css";
+@import "./links.css";
 
 /* Body background gradient */
 body {
