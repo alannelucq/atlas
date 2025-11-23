@@ -1,8 +1,9 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Component, inject, signal } from '@angular/core';
+import { Router, RouterLink } from "@angular/router";
 import HomeCard from './home-card/home-card';
 import { PageSummary } from "./models/page-summary";
 import Icon from '../../shared/ui/icon.component';
+import { UUIDProvider } from "../../core/providers/uuid.provider";
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ import Icon from '../../shared/ui/icon.component';
         <app-icon icon="view_kanban"/>
         Open Kanban Board
       </a>
-      <a role="link" class="button-link button-secondary" routerLink="edit-page">
+      <a role="link" class="button-link button-secondary" (click)="navigateToNewPage()">
         <app-icon icon="add"/>
         Create new page
       </a>
@@ -59,10 +60,12 @@ import Icon from '../../shared/ui/icon.component';
               gap: var(--size-4);
           }
       }
-  `
+  `,
 })
 export default class Home {
-  recentPages = signal<PageSummary[]>([
+  private readonly uuidProvider = inject(UUIDProvider);
+  private readonly router = inject(Router);
+  protected recentPages = signal<PageSummary[]>([
     {
       id: '1',
       title: 'Getting Started Guide',
@@ -73,4 +76,8 @@ export default class Home {
       tags: ['documentation', 'guide']
     }
   ]);
+
+  async navigateToNewPage() {
+    await this.router.navigate(['page', this.uuidProvider.generate()]);
+  }
 }

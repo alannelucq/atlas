@@ -1,7 +1,8 @@
-import { Component, signal } from "@angular/core";
+import { Component, input, linkedSignal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterLink } from "@angular/router";
 import { Field, form } from "@angular/forms/signals";
+import { injectPage } from "../domain/query";
 
 @Component({
   selector: "app-edit-page",
@@ -10,7 +11,8 @@ import { Field, form } from "@angular/forms/signals";
     <header>
       <a role="link" routerLink="" class="back-link">Back to home</a>
     </header>
-
+    <p>
+    </p>
     <section>
       <input
         class="title-input"
@@ -87,8 +89,13 @@ import { Field, form } from "@angular/forms/signals";
       }
   `
 })
-export default class EditPage {
-  protected pageForm = form(signal({title: '', content: ''}))
+export default class PageEditor {
+  readonly id = input.required<string>();
+  readonly query = injectPage(this.id);
+  pageForm = form(linkedSignal(() => {
+    const data = this.query.data();
+    return data ?? {title: '', content: ''}
+  }))
 
   protected saveTitle() {
     console.log('Saving title: ', this.pageForm.title().value());

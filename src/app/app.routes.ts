@@ -7,8 +7,8 @@ export const routes: Routes = [
     loadComponent: () => import('./features/home/home')
   },
   {
-    path: 'edit-page',
-    loadComponent: () => import('./features/edit-page/edit-page'),
+    path: 'page/:id',
+    loadComponent: () => import('./features/page-editor/page-editor'),
   },
   {
     path: 'kanban',

@@ -3,7 +3,9 @@ import { page } from 'vitest/browser';
 import { expect, test } from "vitest";
 
 import Home from './home';
-import { provideRouter } from "@angular/router";
+import { provideRouter, Router } from "@angular/router";
+import PageEditor from '../page-editor/page-editor';
+import { FakeUUIDProvider, UUIDProvider } from '../../core/providers/uuid.provider';
 
 class PageTester {
   readonly fixture = TestBed.createComponent(Home);
@@ -15,10 +17,20 @@ class PageTester {
 
 describe('Home', () => {
   test('should have default elements', async () => {
-    TestBed.configureTestingModule({providers: [provideRouter([])]});
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter([{path: 'page/:id', component: PageEditor}]),
+        {provide: UUIDProvider, useValue: new FakeUUIDProvider().withUuid('xxx')},
+      ]
+    });
     const tester = new PageTester();
+    const router = TestBed.inject(Router);
+
     expect(tester.title).toBeVisible();
     expect(tester.kanbanLink).toHaveAttribute('routerLink', 'kanban');
-    expect(tester.createPageLink).toHaveAttribute('routerLink', 'edit-page');
+
+    await tester.createPageLink.click();
+    expect(router.url).toBe('/page/xxx');
   });
 })
+
