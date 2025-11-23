@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import HomeCard from './home-card/home-card';
 import { PageSummary } from "./models/page-summary";
+import Icon from '../../shared/ui/icon.component';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, HomeCard],
+  imports: [RouterLink, HomeCard, Icon],
   template: `
     <header>
       <h1>Atlas Project</h1>
@@ -14,10 +15,12 @@ import { PageSummary } from "./models/page-summary";
 
     <nav class="actions" aria-label="Main actions">
       <a role="link" class="button-link button-primary" routerLink="kanban">
-        <span aria-hidden="true">📊</span> Open Kanban Board
+        <app-icon icon="view_kanban"/>
+        Open Kanban Board
       </a>
       <a role="link" class="button-link button-secondary" routerLink="edit-page">
-        + Create new page
+        <app-icon icon="add"/>
+        Create new page
       </a>
     </nav>
 
