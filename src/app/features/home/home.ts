@@ -1,13 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
-import HomeCard from './home-card/home-card';
-import { PageSummary } from "./models/page-summary";
+import PageSummaryCard from './home-card/page-summary-card';
 import Icon from '../../shared/ui/icon.component';
 import { UUIDProvider } from "../../core/providers/uuid.provider";
+import { injectLatestPages } from "../domain/query";
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, HomeCard, Icon],
+  imports: [RouterLink, PageSummaryCard, Icon],
   template: `
     <header>
       <h1>Atlas Project</h1>
@@ -27,8 +27,8 @@ import { UUIDProvider } from "../../core/providers/uuid.provider";
 
     <section class="recent-pages">
       <h2>Recent Pages</h2>
-      @for (page of recentPages(); track page.id) {
-        <app-home-card [page]="page"/>
+      @for (page of latestPagesQuery.data(); track page.id) {
+        <app-home-card [page]="page" [routerLink]="['page', page.id]"/>
       }
     </section>
   `,
@@ -65,17 +65,7 @@ import { UUIDProvider } from "../../core/providers/uuid.provider";
 export default class Home {
   private readonly uuidProvider = inject(UUIDProvider);
   private readonly router = inject(Router);
-  protected recentPages = signal<PageSummary[]>([
-    {
-      id: '1',
-      title: 'Getting Started Guide',
-      description: 'Welcome to Atlas! This is a text block where you can write your thoughts and ideas.',
-      status: 'In Progress',
-      date: 'Today',
-      dateTime: '2024-01-15',
-      tags: ['documentation', 'guide']
-    }
-  ]);
+  protected latestPagesQuery = injectLatestPages();
 
   async navigateToNewPage() {
     await this.router.navigate(['page', this.uuidProvider.generate()]);

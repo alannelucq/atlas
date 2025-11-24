@@ -6,6 +6,7 @@ import { FakeUUIDProvider, UUIDProvider } from "./core/providers/uuid.provider";
 import { InMemoryPageGateway, PageGateway } from "./features/domain/gateways/page.gateway";
 import { EmptyPageBuilder, StubPageBuilder } from "./features/domain/models/page.model";
 import { provideQueryClient, QueryClient } from "@tanstack/angular-query-experimental";
+import { StubPageSummaryBuilder } from "./features/domain/models/page-summary.model";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,10 +16,18 @@ export const appConfig: ApplicationConfig = {
     {provide: UUIDProvider, useValue: new FakeUUIDProvider().withUuid('xxx')},
     {
       provide: PageGateway,
-      useValue: new InMemoryPageGateway().withPages({
-        'xxx': EmptyPageBuilder('xxx').build(),
-        'yyy': StubPageBuilder().id('yyy').build()
-      })
+      useValue: new InMemoryPageGateway()
+        .withPages({
+          'xxx': EmptyPageBuilder('xxx').build(),
+          'yyy': StubPageBuilder()
+            .id('yyy')
+            .title('Getting Started Guide')
+            .content('Welcome to Atlas! This is a text block where you can write your thoughts and ideas')
+            .build()
+        })
+        .withSummaries({
+          'yyy': StubPageSummaryBuilder().id('yyy').build()
+        })
     }
   ]
 };

@@ -6,6 +6,9 @@ import Home from './home';
 import { provideRouter, Router } from "@angular/router";
 import PageEditor from '../page-editor/page-editor';
 import { FakeUUIDProvider, UUIDProvider } from '../../core/providers/uuid.provider';
+import { InMemoryPageGateway, PageGateway } from "../domain/gateways/page.gateway";
+import { provideTanStackQuery, QueryClient } from "@tanstack/angular-query-experimental";
+import { StubPageSummaryBuilder } from "../domain/models/page-summary.model";
 
 class PageTester {
   readonly fixture = TestBed.createComponent(Home);
@@ -16,13 +19,23 @@ class PageTester {
 }
 
 describe('Home', () => {
-  test('should have default elements', async () => {
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([{path: 'page/:id', component: PageEditor}]),
         {provide: UUIDProvider, useValue: new FakeUUIDProvider().withUuid('xxx')},
+        {
+          provide: PageGateway, useValue: new InMemoryPageGateway().withSummaries({
+            'xxx': StubPageSummaryBuilder().id('xxx').build()
+          })
+        },
+        provideTanStackQuery(new QueryClient())
       ]
     });
+  })
+
+  test('should have default elements', async () => {
     const tester = new PageTester();
     const router = TestBed.inject(Router);
 

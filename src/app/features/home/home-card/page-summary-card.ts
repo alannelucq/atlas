@@ -1,28 +1,32 @@
 import { Component, input } from '@angular/core';
-import { PageSummary } from "../models/page-summary";
+import { PageSummary } from "../../domain/models/page-summary.model";
+import { DatePipe } from "@angular/common";
+import { LabelByPageStatusPipe } from "../../../shared/pipes/label-by-page-status/label-by-page-status.pipe";
 
 @Component({
   selector: 'app-home-card',
   template: `
+    @let _page = page();
     <header>
-      <h3>{{ page().title }}</h3>
-      <span class="status-badge">{{ page().status }}</span>
+      <h3>{{ _page.title }}</h3>
+      <span class="status-badge">{{ _page.status | labelByPageStatus }}</span>
     </header>
     <p class="text-subtitle">
-      {{ page().description }}
+      {{ _page.description }}
     </p>
     <footer>
-      <time [attr.datetime]="page().dateTime">
-        <span aria-hidden="true">🕐</span> {{ page().date }}
+      <time [attr.datetime]="_page.lastModifiedAt">
+        <span aria-hidden="true">🕐</span> {{ _page.lastModifiedAt | date:'mediumDate' }}
       </time>
       <div class="tags">
-        @for (tag of page().tags; track tag) {
+        @for (tag of _page.tags; track tag) {
           <span class="tag">{{ tag }}</span>
         }
       </div>
     </footer>
   `,
   host: {role: 'article'},
+  imports: [DatePipe, LabelByPageStatusPipe],
   styles: `
       :host {
           background: var(--gray-0);
@@ -63,6 +67,6 @@ import { PageSummary } from "../models/page-summary";
       }
   `
 })
-export default class HomeCard {
+export default class PageSummaryCard {
   page = input.required<PageSummary>();
 }

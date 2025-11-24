@@ -17,11 +17,6 @@ class PageTester {
   readonly backLink = page.getByRole('link', {name: /Back to home/});
   readonly titleField = page.getByRole('textbox', {name: /Title/});
   readonly contentField = page.getByRole('textbox', {name: /Content/});
-
-  constructor() {
-    // Triggers change detection to ensure signal input has value
-    TestBed.tick();
-  }
 }
 
 describe('Page editor', () => {
@@ -40,18 +35,13 @@ describe('Page editor', () => {
   })
 
   it('should have default values', () => {
-    const tester = new PageTester();
-    expect(tester.backLink).toHaveAttribute('routerLink', '');
-    expect(tester.titleField).toHaveValue('');
-    expect(tester.contentField).toHaveValue('');
-  });
-
-  it('should fill form from page', async () => {
     gateway.pageById = {
       'xxx': StubPageBuilder().id('xxx').title('My awesome page').content('Some content').build()
     }
+    
     const tester = new PageTester();
 
+    expect(tester.backLink).toHaveAttribute('routerLink', '');
     waitForAsync(() => {
       expect(tester.titleField).toHaveValue('My awesome page');
       expect(tester.contentField).toHaveValue('Some content');

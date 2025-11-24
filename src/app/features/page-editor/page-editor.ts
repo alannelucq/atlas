@@ -34,14 +34,6 @@ import { injectPage } from "../domain/query";
   `,
   host: {role: 'main'},
   styles: `
-      :host {
-          display: grid;
-          gap: var(--size-6);
-          max-width: var(--size-content-3);
-          margin: 0 auto;
-          padding: var(--size-6);
-      }
-
       section {
           display: grid;
           gap: var(--size-5);
